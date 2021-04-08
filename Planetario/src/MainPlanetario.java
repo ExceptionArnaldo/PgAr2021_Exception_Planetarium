@@ -23,6 +23,8 @@ public class MainPlanetario {
 	final static String NOME_CORPO = "Inserisci il nome: ";
 	final static String COORDINATE = "Inserisci la coordinata %s: ";
 	
+	final static String LUNA_IN_PIANETA = "Inserire il nome della pianeta in cui gira la luna: ";
+	
 	public static void main(String[] args) {
 		
 		Stella stella = nuovaStella();
@@ -43,6 +45,9 @@ public class MainPlanetario {
 							sistemaSolare.aggiungiPianeta(nuovoPianeta());
 							break;
 						}
+						case 2:{
+							sistemaSolare.aggiungiLuna(nuovaLuna(), InputDati.leggiStringaNonVuota(LUNA_IN_PIANETA));
+						}
 					}
 					break;
 				}
@@ -54,7 +59,7 @@ public class MainPlanetario {
 					menuRicercaCorpo.stampaMenu();
 				}
 				case 4:{
-					sistemaSolare.vediPianete();
+					sistemaSolare.stampaPianete();
 				}
 			}
 			scelta = menu.scegli();
@@ -77,29 +82,33 @@ public class MainPlanetario {
 	public static Pianeta nuovoPianeta() {
 		
 		String nome;
-		double massa;
-		Punto punto = new Punto();
+		double massa, x, y;
+		Punto punto;
 		
 		nome = InputDati.leggiStringa(NOME_CORPO);
 		massa = InputDati.leggiDoubleConMinimo(MASSA_CORPO, MIN_MASSA);
-		punto.setX(InputDati.leggiDouble(String.format(COORDINATE, "x")));
-		punto.setY(InputDati.leggiDouble(String.format(COORDINATE, "y")));
+		x = InputDati.leggiDouble(String.format(COORDINATE, "x"));
+		y = InputDati.leggiDouble(String.format(COORDINATE, "y"));
+		
+		punto = new Punto(x, y);
 		
 		return new Pianeta(nome, massa, punto);
 	}
 	
-	public static Pianeta nuovaLuna() {
+	public static Luna nuovaLuna() {
 		
 		String nome;
-		double massa;
-		Punto punto = new Punto();
+		double massa, x, y;
+		Punto punto;
 		
 		nome = InputDati.leggiStringa(NOME_CORPO);
 		massa = InputDati.leggiDoubleConMinimo(MASSA_CORPO, MIN_MASSA);
-		punto.setX(InputDati.leggiDouble(String.format(COORDINATE, "x")));
-		punto.setY(InputDati.leggiDouble(String.format(COORDINATE, "y")));
+		x = InputDati.leggiDouble(String.format(COORDINATE, "x"));
+		y = InputDati.leggiDouble(String.format(COORDINATE, "y"));
 		
-		return new Pianeta(nome, massa, punto);
+		punto = new Punto(x, y);
+		
+		return new Luna(nome, massa, punto);
 	}
 	
 

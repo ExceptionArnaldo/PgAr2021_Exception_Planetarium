@@ -25,15 +25,29 @@ public class SistemaSolare {
 		}
 	}
 	
-	public void vediPianete() {
+	public Pianeta trovaPianeta(String nomePianeta) {
+		
 		for(int i = 0; i < pianete.size(); i++) {
-			System.out.println(pianete.get(i));
+			if (pianete.get(i).getNome().equalsIgnoreCase(nomePianeta));
+			return pianete.get(i);
 		}
+		
+		return null;
+		
 	}
 	
-	/*public ArrayList<Pianeta> getPianeta() 
-	{
-		return pianete;
-	}*/
+	public void aggiungiLuna(Luna nuovaLuna, String nomePianeta) {
+		
+		trovaPianeta(nomePianeta).aggiungiLuna(nuovaLuna);;
+		
+	}
+	
+	public void stampaPianete() {
+		for(int i = 0; i < pianete.size(); i++) {
+			System.out.println("nome: " + pianete.get(i).getNome());
+			System.out.println("massa: " + pianete.get(i).getMassa());
+			System.out.println(pianete.get(i).getPunto());
+		}
+	}
 	
 }
