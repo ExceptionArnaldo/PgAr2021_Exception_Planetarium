@@ -10,5 +10,12 @@ public class CorpoCeleste {
 		this.massa = massa;
 		this.punto = punto;
 	}
+
+	@Override
+	public String toString() {
+		return "CorpoCeleste [nome=" + nome + ", massa=" + massa + ", punto=" + punto + "]";
+	}
+	
+	
 	
 }
