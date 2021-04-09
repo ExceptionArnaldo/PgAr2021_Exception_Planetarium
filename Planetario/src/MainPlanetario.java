@@ -6,7 +6,7 @@ public class MainPlanetario {
 	final static int MIN_MASSA = 0;
 	
 	final static String MENU_TITOLO = "Benvenuti in planetario";
-	final static String VOCI_MENU[] = {"Aggiungi un corpo celeste", "Rimuovi un corpo celeste", "Ricercare un corpo celeste", "Stampa tutti i pianeti"};
+	final static String VOCI_MENU[] = {"Aggiungi un corpo celeste", "Rimuovi un corpo celeste", "Ricercare un corpo celeste", "Stampa tutti i pianeti", "Calcola centro di massa"};
 	
 	final static String AGGIUNGERE_CORPO_CELESTE = "Aggiungere un corpo celeste";
 	final static String AGGIUNGERE_CORPO_CELESTE_VOCI[] = {"Aggiungi un pianeta", "Aggiungi una luna"};
@@ -26,12 +26,20 @@ public class MainPlanetario {
 	final static String SUCCESSO_CORPO = "Aggiunto il corpo celeste";
 	final static String ERRORE_CORPO = "Impossibile aggiungere il corpo celeste";
 	
+	final static String SUCCESSO_RIMUOVERE_CORPO = "Il corpo celeste ии stato rimosso";
+	final static String ERRORE_RIMUOVERE_CORPO = "impossibile rimuovere il corpo celeste";
+	
+	final static String MASSA = "Massa totale: ";
+	final static String MASSA_POSIZIONE = "Massa pesata delle posizioni: (%.2f, %.2f)";
+	final static String CENTRO_DI_MASSA = "Centro massa: (%.2f, %.2f)";
+	
 	final static String LUNA_IN_PIANETA = "Inserire il nome della pianeta in cui gira la luna: ";
 	
 	public static void main(String[] args) {
 		
 		Stella stella = nuovaStella();
 		SistemaSolare sistemaSolare = new SistemaSolare(stella);
+		sistemaSolare.aggiornaMassa(stella.getMassa(), stella.getPunto(), 1);
 		
 		MyMenu menu = new MyMenu(MENU_TITOLO, VOCI_MENU);
 		MyMenu menuAggiungereCorpo = new MyMenu(AGGIUNGERE_CORPO_CELESTE, AGGIUNGERE_CORPO_CELESTE_VOCI);
@@ -58,14 +66,30 @@ public class MainPlanetario {
 					break;
 				}
 				case 2: {
-					menuEliminareCorpo.stampaMenu();
+					switch(menuEliminareCorpo.scegli()) {
+						case 1:{
+							if(sistemaSolare.eliminaPianeta(InputDati.leggiStringaNonVuota(NOME_CORPO)) == true) System.out.println();
+							break;
+						}
+						case 2:{
+							break;
+						}
+					}
 					break;
 				}
 				case 3: {
 					menuRicercaCorpo.stampaMenu();
+					break;
 				}
 				case 4:{
 					sistemaSolare.stampaPianete();
+					break;
+				}
+				case 5:{
+					System.out.println(MASSA + sistemaSolare.getMassaTotale());
+					System.out.println(String.format(MASSA_POSIZIONE, sistemaSolare.getSommaPosizioni().getX(), sistemaSolare.getSommaPosizioni().getY()));
+					System.out.println(String.format(CENTRO_DI_MASSA, sistemaSolare.getCentroMassa().getX(), sistemaSolare.getCentroMassa().getY()));
+					break;
 				}
 			}
 			scelta = menu.scegli();

@@ -6,6 +6,9 @@ public class SistemaSolare {
 	
 	private Stella stella;
 	private ArrayList<Pianeta> pianete = new ArrayList<>();
+	private double massaTotale = 0;
+	private Punto sommaPosizioni = new Punto(0, 0);
+	private Punto centroMassa = new Punto(0, 0);
 	
 	public SistemaSolare(Stella stella) {
 		this.stella = stella;
@@ -19,10 +22,24 @@ public class SistemaSolare {
 		this.stella = stella;
 	}
 	
+	public double getMassaTotale() {
+		return massaTotale;
+	}
+
+	public Punto getSommaPosizioni() {
+		return sommaPosizioni;
+	}
+
+	public Punto getCentroMassa() {
+		return centroMassa;
+	}
+
+	
 	public boolean aggiungiPianeta(Pianeta nuovoPianeta) {
 		if(pianete.size() < MAX_PIANETE) {
 			if(checkNome(nuovoPianeta.getNome()) == false) {
 				pianete.add(nuovoPianeta);
+				aggiornaMassa(nuovoPianeta.getMassa(), nuovoPianeta.getPunto(), 1);
 				return true;
 			}
 			
@@ -45,7 +62,7 @@ public class SistemaSolare {
 	public Pianeta trovaPianeta(String nomePianeta) {
 		
 		for(int i = 0; i < pianete.size(); i++) {
-			if (pianete.get(i).getNome().equals(nomePianeta));
+			if (pianete.get(i).getNome().equalsIgnoreCase(nomePianeta));
 			return pianete.get(i);
 		}
 		
@@ -53,13 +70,51 @@ public class SistemaSolare {
 		
 	}
 	
+	public boolean eliminaPianeta(String nomePianeta) {
+		
+		if(checkNome(nomePianeta) == true) {
+			aggiornaMassa(trovaPianeta(nomePianeta).getMassa(), trovaPianeta(nomePianeta).getPunto(), 0);
+			pianete.remove(trovaPianeta(nomePianeta));
+			return true;
+		}
+		
+		else return false;
+		
+	}
+	
 	public boolean aggiungiLuna(Luna nuovaLuna, String nomePianeta) {
 		
 		if(checkNome(nomePianeta) == true) {
 			trovaPianeta(nomePianeta).aggiungiLuna(nuovaLuna);
+			aggiornaMassa(nuovaLuna.getMassa(), nuovaLuna.getPunto(), 1);
 			return true;
 		}
 		else return false;
+		
+	}
+	
+	public void aggiornaMassa(double massa, Punto puntoCorrente, int stato) {
+		if (stato == 1) {
+			massaTotale += massa;
+			sommaPosizioni.setX(sommaPosizioni.getX() + (puntoCorrente.getX() * massa));
+			sommaPosizioni.setY(sommaPosizioni.getY() + (puntoCorrente.getY() * massa));
+			
+		}
+		else {
+			massaTotale -= massa;
+			sommaPosizioni.setX(sommaPosizioni.getX() - (puntoCorrente.getX() * massa));
+			sommaPosizioni.setY(sommaPosizioni.getY() - (puntoCorrente.getY() * massa));
+		}
+		
+		calcolaCentroMassa();
+		
+		
+	}
+	
+	public void calcolaCentroMassa() {
+		
+		centroMassa.setX(massaTotale / sommaPosizioni.getX());
+		centroMassa.setY(massaTotale / sommaPosizioni.getY());
 		
 	}
 	
