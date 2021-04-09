@@ -6,7 +6,7 @@ public class MainPlanetario {
 	final static int MIN_MASSA = 0;
 	
 	final static String MENU_TITOLO = "Benvenuti in planetario";
-	final static String VOCI_MENU[] = {"Aggiungi un corpo celeste", "Rimuovi un corpo celeste", "Ricercare un corpo celeste", "Stampa tutti i pianeti", "Calcola centro di massa"};
+	final static String VOCI_MENU[] = {"Aggiungi un corpo celeste", "Rimuovi un corpo celeste", "Ricercare un corpo celeste", "Stampare le lune di un pianeta", "Stamapre il percorso di una luna", "Stampa tutti i pianeti", "Calcola centro di massa"};
 	
 	final static String AGGIUNGERE_CORPO_CELESTE = "Aggiungere un corpo celeste";
 	final static String AGGIUNGERE_CORPO_CELESTE_VOCI[] = {"Aggiungi un pianeta", "Aggiungi una luna"};
@@ -34,6 +34,8 @@ public class MainPlanetario {
 	final static String MASSA = "Massa totale: ";
 	final static String MASSA_POSIZIONE = "Massa pesata delle posizioni: (%.2f, %.2f)";
 	final static String CENTRO_DI_MASSA = "Centro massa: (%.2f, %.2f)";
+	
+	final static String PERCORSO = "Il percorso da percorrere: %s < %s < %s";
 	
 	final static String LUNA_IN_PIANETA = "Inserire il nome della pianeta in cui gira la luna: ";
 	
@@ -70,11 +72,11 @@ public class MainPlanetario {
 				case 2: {
 					switch(menuEliminareCorpo.scegli()) {
 						case 1: {
-							if(sistemaSolare.eliminaPianeta(InputDati.leggiStringaNonVuota(NOME_CORPO)) == true) System.out.println();
+							if(sistemaSolare.eliminaPianeta(InputDati.leggiStringaNonVuota(NOME_CORPO)) == true) System.out.println(SUCCESSO_RIMUOVERE_CORPO);
 							break;
 						}
 						case 2: {
-							break;
+							if(sistemaSolare.eliminaLuna(InputDati.leggiStringaNonVuota(NOME_CORPO)) == true) System.out.println(SUCCESSO_RIMUOVERE_CORPO);
 						}
 					}
 					break;
@@ -82,25 +84,48 @@ public class MainPlanetario {
 				case 3: {
 					switch(menuRicercaCorpo.scegli()) {
 						case 1: {
-								String nome = InputDati.leggiStringaNonVuota(NOME_CORPO);
-								if(sistemaSolare.checkNomePianeta(nome) == true) {
-									System.out.println(sistemaSolare.trovaPianeta(nome).toString());
-								}
-								else System.out.println(ERRORE_RICERCA);
+							String nome = InputDati.leggiStringaNonVuota(NOME_CORPO);
+							if(sistemaSolare.checkNomePianeta(nome) == true) {
+								System.out.println(sistemaSolare.trovaPianeta(nome).toString());
+							}
+							else System.out.println(ERRORE_RICERCA);
 							break;
 						}
 						case 2: {
-							
+							String nome = InputDati.leggiStringaNonVuota(NOME_CORPO);
+							if(sistemaSolare.checkNomeLuna(nome) == true) {
+								System.out.println(sistemaSolare.trovaLuna(nome).toString());
+								System.out.println(sistemaSolare.trovaPianeta(sistemaSolare.trovaLuna(nome)).toString());
+							}
+							else System.out.println(ERRORE_RICERCA);
 							break;
 						}
 					}
 					break;
 				}
 				case 4: {
-					sistemaSolare.stampaTuttiPianete();
+					String nome = InputDati.leggiStringaNonVuota(NOME_CORPO);
+					if(sistemaSolare.checkNomePianeta(nome) == true) {
+						sistemaSolare.stampaLune(nome);
+					}
+					else System.out.println(ERRORE_RICERCA);
+
 					break;
 				}
 				case 5: {
+					String nome = InputDati.leggiStringaNonVuota(NOME_CORPO);
+					if(sistemaSolare.checkNomeLuna(nome) == true) {
+						System.out.println(String.format(PERCORSO, stella.getNome(), sistemaSolare.trovaPianeta(sistemaSolare.trovaLuna(nome)).getNome(), nome));
+					}
+					else System.out.println(ERRORE_RICERCA);
+					
+					break;
+				}
+				case 6:{
+					sistemaSolare.stampaTuttiPianeti();
+					break;
+				}
+				case 7:{
 					System.out.println(MASSA + sistemaSolare.getMassaTotale());
 					System.out.println(String.format(MASSA_POSIZIONE, sistemaSolare.getSommaPosizioni().getX(), sistemaSolare.getSommaPosizioni().getY()));
 					System.out.println(String.format(CENTRO_DI_MASSA, sistemaSolare.getCentroMassa().getX(), sistemaSolare.getCentroMassa().getY()));

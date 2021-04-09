@@ -49,10 +49,37 @@ public class SistemaSolare {
 		return false;
 	}
 	
+	public boolean aggiungiLuna(Luna nuovaLuna, String nomePianeta) {
+		
+		if(checkNomePianeta(nomePianeta) == true) {
+			if(checkNomiDoppi(nuovaLuna.getNome()) == false) {
+				if(trovaPianeta(nomePianeta).aggiungiLuna(nuovaLuna) == true) {
+					aggiornaMassa(nuovaLuna.getMassa(), nuovaLuna.getPunto(), 1);
+					return true;
+				}
+				else return false;
+			}
+			else return false;
+		}
+		else return false;
+	}
+	
 	public boolean checkNomePianeta(String nomeCorpo) {
 		
 		for(int i = 0; i < pianete.size(); i++) {
 			if(pianete.get(i).getNome().equalsIgnoreCase(nomeCorpo)) return true;
+		}
+		
+		return false;
+		
+	}
+	
+	public boolean checkNomeLuna(String nomeCorpo) {
+		
+		for(int i = 0; i < pianete.size(); i++) {
+			for(int j = 0; j < pianete.get(j).getLuna().size(); j++) {
+				if(pianete.get(i).getLuna().get(j).getNome().equalsIgnoreCase(nomeCorpo)) return true;
+			}
 		}
 		
 		return false;
@@ -84,6 +111,33 @@ public class SistemaSolare {
 		
 	}
 	
+	public Pianeta trovaPianeta(Luna lunaOrbita) {
+		
+		for(int i = 0; i < pianete.size(); i++) {
+			for(int j = 0; j < pianete.get(j).getLuna().size(); j++) {
+				if(pianete.get(i).getLuna().get(j).getNome().equalsIgnoreCase(lunaOrbita.getNome())) {
+					return pianete.get(i);
+				}
+			}
+		}
+		
+		return null;
+		
+	}
+	
+	public Luna trovaLuna(String nomeLuna) {
+		
+		for(int i = 0; i < pianete.size(); i++) {
+			for(int j = 0; j < pianete.get(j).getLuna().size(); j++) {
+				if(pianete.get(i).getLuna().get(j).getNome().equalsIgnoreCase(nomeLuna)) {
+					return pianete.get(i).getLuna().get(j);
+				}
+			}
+		}
+		
+		return null;
+	}
+	
 	public boolean eliminaPianeta(String nomePianeta) {
 		
 		if(checkNomePianeta(nomePianeta) == true) {
@@ -96,19 +150,16 @@ public class SistemaSolare {
 		
 	}
 	
-	public boolean aggiungiLuna(Luna nuovaLuna, String nomePianeta) {
+	public boolean eliminaLuna(String nomeLuna) {
 		
-		if(checkNomePianeta(nomePianeta) == true) {
-			if(checkNomiDoppi(nuovaLuna.getNome()) == false) {
-				if(trovaPianeta(nomePianeta).aggiungiLuna(nuovaLuna) == true) {
-					aggiornaMassa(nuovaLuna.getMassa(), nuovaLuna.getPunto(), 1);
-					return true;
-				}
-				else return false;
-			}
-			else return false;
+		if(checkNomeLuna(nomeLuna) == true) {
+			aggiornaMassa(trovaLuna(nomeLuna).getMassa(), trovaLuna(nomeLuna).getPunto(), 0);
+			trovaPianeta(trovaLuna(nomeLuna)).eliminaLuna(trovaLuna(nomeLuna));
+			return true;
 		}
+		
 		else return false;
+		
 	}
 	
 	public void aggiornaMassa(double massa, Punto puntoCorrente, int stato) {
@@ -136,12 +187,21 @@ public class SistemaSolare {
 		
 	}
 	
-	public void stampaTuttiPianete() {
+	public void stampaTuttiPianeti() {
 		for(int i = 0; i < pianete.size(); i++) {
 			System.out.println("nome: " + pianete.get(i).getNome());
 			System.out.println("massa: " + pianete.get(i).getMassa());
 			System.out.println(pianete.get(i).getPunto());
 		}
+	}
+	
+	public void stampaLune(String nomePianeta) {
+		for(int i = 0; i < trovaPianeta(nomePianeta).getLuna().size(); i++) {
+			System.out.println("nome: " + trovaPianeta(nomePianeta).getLuna().get(i).getNome());
+			System.out.println("massa: " + trovaPianeta(nomePianeta).getLuna().get(i).getMassa());
+			System.out.println(trovaPianeta(nomePianeta).getLuna().get(i).getPunto());
+		}
+		
 	}
 	
 }

@@ -5,5 +5,13 @@ public class Luna extends CorpoCeleste{
 		super(nome, massa, punto);
 		
 	}
+
+	@Override
+	public String toString() {
+		return "Luna [getNome()=" + getNome() + ", getMassa()=" + getMassa() + ", getPunto()=" + getPunto()
+				+ ", toString()=" + super.toString() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ "]";
+	}
+	
 	
 }

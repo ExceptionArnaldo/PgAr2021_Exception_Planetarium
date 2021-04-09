@@ -19,6 +19,11 @@ public class Pianeta extends CorpoCeleste{
 		else return false;
 	}
 	
+	public boolean eliminaLuna(Luna lunaEliminare) {
+		if(lune.remove(lunaEliminare)) return true;
+		else return false;
+	}
+	
 	public ArrayList<Luna> getLuna() {
 		return lune;
 	}
