@@ -37,7 +37,7 @@ public class SistemaSolare {
 	
 	public boolean aggiungiPianeta(Pianeta nuovoPianeta) {
 		if(pianete.size() < MAX_PIANETE) {
-			if(checkNomiDoppi(nuovoPianeta.getNome()) == false) {
+			if(checkNomiDoppi(nuovoPianeta.getNome()) == false && checkPosizione(nuovoPianeta.getPunto()) == false) {
 				pianete.add(nuovoPianeta);
 				aggiornaMassa(nuovoPianeta.getMassa(), nuovoPianeta.getPunto(), 1);
 				return true;
@@ -52,7 +52,7 @@ public class SistemaSolare {
 	public boolean aggiungiLuna(Luna nuovaLuna, String nomePianeta) {
 		
 		if(checkNomePianeta(nomePianeta) == true) {
-			if(checkNomiDoppi(nuovaLuna.getNome()) == false) {
+			if(checkNomiDoppi(nuovaLuna.getNome()) == false && checkPosizione(nuovaLuna.getPunto()) == false) {
 				if(trovaPianeta(nomePianeta).aggiungiLuna(nuovaLuna) == true) {
 					aggiornaMassa(nuovaLuna.getMassa(), nuovaLuna.getPunto(), 1);
 					return true;
@@ -187,11 +187,28 @@ public class SistemaSolare {
 		
 	}
 	
+	public boolean checkPosizione(Punto puntoCorrente) {
+		for(int i = 0; i < pianete.size(); i++) {
+			if(pianete.get(i).getPunto().getX() == puntoCorrente.getX() && pianete.get(i).getPunto().getY() == puntoCorrente.getY()) {
+				return true;
+			}
+			else {
+				for(int j = 0; j < pianete.get(j).getLuna().size(); j++) {
+					if(pianete.get(i).getLuna().get(j).getPunto().getX() == puntoCorrente.getX() && pianete.get(i).getLuna().get(j).getPunto().getY() == puntoCorrente.getY()) {
+						return true;
+					}
+				}
+			}
+		}
+		
+		return false;
+	}
+	
 	public void stampaTuttiPianeti() {
 		for(int i = 0; i < pianete.size(); i++) {
-			System.out.println("nome: " + pianete.get(i).getNome());
-			System.out.println("massa: " + pianete.get(i).getMassa());
-			System.out.println(pianete.get(i).getPunto());
+			System.out.println("Nome: " + pianete.get(i).getNome());
+			System.out.println("Massa: " + pianete.get(i).getMassa());
+			System.out.println(pianete.get(i).getPunto() + "\n");
 		}
 	}
 	
@@ -199,7 +216,7 @@ public class SistemaSolare {
 		for(int i = 0; i < trovaPianeta(nomePianeta).getLuna().size(); i++) {
 			System.out.println("nome: " + trovaPianeta(nomePianeta).getLuna().get(i).getNome());
 			System.out.println("massa: " + trovaPianeta(nomePianeta).getLuna().get(i).getMassa());
-			System.out.println(trovaPianeta(nomePianeta).getLuna().get(i).getPunto());
+			System.out.println(trovaPianeta(nomePianeta).getLuna().get(i).getPunto() + "\n");
 		}
 		
 	}

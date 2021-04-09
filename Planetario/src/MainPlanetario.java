@@ -6,7 +6,9 @@ public class MainPlanetario {
 	final static int MIN_MASSA = 0;
 	
 	final static String MENU_TITOLO = "Benvenuti in planetario";
-	final static String VOCI_MENU[] = {"Aggiungi un corpo celeste", "Rimuovi un corpo celeste", "Ricercare un corpo celeste", "Stampare le lune di un pianeta", "Stamapre il percorso di una luna", "Stampa tutti i pianeti", "Calcola centro di massa"};
+	final static String VOCI_MENU[] = {	"Aggiungi un corpo celeste", "Rimuovi un corpo celeste", "Ricercare un corpo celeste", 
+										"Stampare le lune di un pianeta", "Stamapre il percorso di una luna", "Stampa tutti i pianeti", 
+										"Calcola centro di massa"};
 	
 	final static String AGGIUNGERE_CORPO_CELESTE = "Aggiungere un corpo celeste";
 	final static String AGGIUNGERE_CORPO_CELESTE_VOCI[] = {"Aggiungi un pianeta", "Aggiungi una luna"};
@@ -24,7 +26,7 @@ public class MainPlanetario {
 	final static String COORDINATE = "Inserisci la coordinata %s: ";
 	
 	final static String SUCCESSO_CORPO = "Aggiunto il corpo celeste";
-	final static String ERRORE_CORPO = "Impossibile aggiungere il corpo celeste";
+	final static String ERRORE_CORPO = "Impossibile aggiungere il corpo celeste(nome doppio o posizione doppio)";
 	
 	final static String SUCCESSO_RIMUOVERE_CORPO = "Il corpo celeste ии stato rimosso";
 	final static String ERRORE_RIMUOVERE_CORPO = "impossibile rimuovere il corpo celeste";

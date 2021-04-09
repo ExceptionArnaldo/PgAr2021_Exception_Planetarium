@@ -27,12 +27,13 @@ public class Pianeta extends CorpoCeleste{
 	public ArrayList<Luna> getLuna() {
 		return lune;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Pianeta [getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
-				+ "]";
+		return "Pianeta [Nome=" + getNome() + ", Massa=" + getMassa() + ", Punto=" + getPunto() + "]";
 	}
+	
+	
 	
 	
 	
