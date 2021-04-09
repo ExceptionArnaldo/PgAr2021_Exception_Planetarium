@@ -11,10 +11,16 @@ public class Pianeta extends CorpoCeleste{
 		
 	}
 
-	public void aggiungiLuna(Luna nuovaLuna) {
+	public boolean aggiungiLuna(Luna nuovaLuna) {
 		if(lune.size() < MAX_LUNE) {
 			lune.add(nuovaLuna);
+			return true;
 		}
+		else return false;
+	}
+	
+	public ArrayList<Luna> getLuna() {
+		return lune;
 	}
 	
 	@Override

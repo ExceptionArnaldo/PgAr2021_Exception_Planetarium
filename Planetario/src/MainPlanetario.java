@@ -29,6 +29,8 @@ public class MainPlanetario {
 	final static String SUCCESSO_RIMUOVERE_CORPO = "Il corpo celeste ии stato rimosso";
 	final static String ERRORE_RIMUOVERE_CORPO = "impossibile rimuovere il corpo celeste";
 	
+	final static String ERRORE_RICERCA = "Non esiste il corpo celeste";
+	
 	final static String MASSA = "Massa totale: ";
 	final static String MASSA_POSIZIONE = "Massa pesata delle posizioni: (%.2f, %.2f)";
 	final static String CENTRO_DI_MASSA = "Centro massa: (%.2f, %.2f)";
@@ -57,7 +59,7 @@ public class MainPlanetario {
 							else System.out.println(ERRORE_CORPO);
 							break;
 						}
-						case 2:{
+						case 2: {
 							if(sistemaSolare.aggiungiLuna(nuovaLuna(), InputDati.leggiStringaNonVuota(LUNA_IN_PIANETA))) System.out.println(SUCCESSO_CORPO);
 							else System.out.println(ERRORE_CORPO);
 							break;
@@ -67,25 +69,38 @@ public class MainPlanetario {
 				}
 				case 2: {
 					switch(menuEliminareCorpo.scegli()) {
-						case 1:{
+						case 1: {
 							if(sistemaSolare.eliminaPianeta(InputDati.leggiStringaNonVuota(NOME_CORPO)) == true) System.out.println();
 							break;
 						}
-						case 2:{
+						case 2: {
 							break;
 						}
 					}
 					break;
 				}
 				case 3: {
-					menuRicercaCorpo.stampaMenu();
+					switch(menuRicercaCorpo.scegli()) {
+						case 1: {
+								String nome = InputDati.leggiStringaNonVuota(NOME_CORPO);
+								if(sistemaSolare.checkNomePianeta(nome) == true) {
+									System.out.println(sistemaSolare.trovaPianeta(nome).toString());
+								}
+								else System.out.println(ERRORE_RICERCA);
+							break;
+						}
+						case 2: {
+							
+							break;
+						}
+					}
 					break;
 				}
-				case 4:{
-					sistemaSolare.stampaPianete();
+				case 4: {
+					sistemaSolare.stampaTuttiPianete();
 					break;
 				}
-				case 5:{
+				case 5: {
 					System.out.println(MASSA + sistemaSolare.getMassaTotale());
 					System.out.println(String.format(MASSA_POSIZIONE, sistemaSolare.getSommaPosizioni().getX(), sistemaSolare.getSommaPosizioni().getY()));
 					System.out.println(String.format(CENTRO_DI_MASSA, sistemaSolare.getCentroMassa().getX(), sistemaSolare.getCentroMassa().getY()));
