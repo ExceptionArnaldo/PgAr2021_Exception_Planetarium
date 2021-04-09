@@ -19,16 +19,33 @@ public class SistemaSolare {
 		this.stella = stella;
 	}
 	
-	public void aggiungiPianeta(Pianeta nuovoPianeta) {
+	public boolean aggiungiPianeta(Pianeta nuovoPianeta) {
 		if(pianete.size() < MAX_PIANETE) {
-			pianete.add(nuovoPianeta);
+			if(checkNome(nuovoPianeta.getNome()) == false) {
+				pianete.add(nuovoPianeta);
+				return true;
+			}
+			
+			else return false;
+			
 		}
+		return false;
+	}
+	
+	public boolean checkNome(String nomePianeta) {
+		
+		for(int i = 0; i < pianete.size(); i++) {
+			if(pianete.get(i).getNome().equalsIgnoreCase(nomePianeta)) return true;
+		}
+		
+		return false;
+		
 	}
 	
 	public Pianeta trovaPianeta(String nomePianeta) {
 		
 		for(int i = 0; i < pianete.size(); i++) {
-			if (pianete.get(i).getNome().equalsIgnoreCase(nomePianeta));
+			if (pianete.get(i).getNome().equals(nomePianeta));
 			return pianete.get(i);
 		}
 		
@@ -36,9 +53,13 @@ public class SistemaSolare {
 		
 	}
 	
-	public void aggiungiLuna(Luna nuovaLuna, String nomePianeta) {
+	public boolean aggiungiLuna(Luna nuovaLuna, String nomePianeta) {
 		
-		trovaPianeta(nomePianeta).aggiungiLuna(nuovaLuna);;
+		if(checkNome(nomePianeta) == true) {
+			trovaPianeta(nomePianeta).aggiungiLuna(nuovaLuna);
+			return true;
+		}
+		else return false;
 		
 	}
 	

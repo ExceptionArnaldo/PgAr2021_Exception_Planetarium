@@ -23,6 +23,9 @@ public class MainPlanetario {
 	final static String NOME_CORPO = "Inserisci il nome: ";
 	final static String COORDINATE = "Inserisci la coordinata %s: ";
 	
+	final static String SUCCESSO_CORPO = "Aggiunto il corpo celeste";
+	final static String ERRORE_CORPO = "Impossibile aggiungere il corpo celeste";
+	
 	final static String LUNA_IN_PIANETA = "Inserire il nome della pianeta in cui gira la luna: ";
 	
 	public static void main(String[] args) {
@@ -42,11 +45,14 @@ public class MainPlanetario {
 				case 1: {
 					switch(menuAggiungereCorpo.scegli()) {
 						case 1: {
-							sistemaSolare.aggiungiPianeta(nuovoPianeta());
+							if(sistemaSolare.aggiungiPianeta(nuovoPianeta())) System.out.println(SUCCESSO_CORPO);
+							else System.out.println(ERRORE_CORPO);
 							break;
 						}
 						case 2:{
-							sistemaSolare.aggiungiLuna(nuovaLuna(), InputDati.leggiStringaNonVuota(LUNA_IN_PIANETA));
+							if(sistemaSolare.aggiungiLuna(nuovaLuna(), InputDati.leggiStringaNonVuota(LUNA_IN_PIANETA))) System.out.println(SUCCESSO_CORPO);
+							else System.out.println(ERRORE_CORPO);
+							break;
 						}
 					}
 					break;
